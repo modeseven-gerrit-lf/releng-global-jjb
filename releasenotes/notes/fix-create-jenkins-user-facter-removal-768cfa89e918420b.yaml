@@ -1,0 +1,10 @@
+---
+fixes:
+  - |
+    Replace facter dependency with /etc/os-release for OS detection in
+    create-jenkins-user.sh. The facter command is not installed on newer
+    Ubuntu 24.04 images, causing the jenkins user's authorized_keys to
+    not be copied, which prevents Jenkins from launching the agent process
+    via SSH. Falls back to facter on legacy images that still have it.
+    Also adds fallback logic for locating the default cloud user's
+    authorized_keys (ubuntu, centos) when the OS variable is unavailable.
