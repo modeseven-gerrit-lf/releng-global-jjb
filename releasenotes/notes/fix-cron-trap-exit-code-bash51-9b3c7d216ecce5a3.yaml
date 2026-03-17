@@ -1,0 +1,11 @@
+---
+fixes:
+  - |
+    Fix openstack cron job EXIT trap causing false build failures on
+    bash 5.1 (Ubuntu 22.04). When ``set -e`` is active and a command
+    in the EXIT trap returns non-zero, bash 5.1 propagates the trap's
+    failure exit code instead of preserving the original ``exit 0``.
+    The ``_rmtemp`` trap used an ``if [ -f ]`` pattern that returned
+    exit code 1 when the temp file didn't exist, causing the cron job
+    to fail despite all cleanup scripts completing successfully.
+    Changed to ``rm -f || true`` to ensure the trap always returns 0.

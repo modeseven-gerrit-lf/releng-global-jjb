@@ -57,10 +57,8 @@ _cleanup()
 
 _rmtemp()
 {
-    if [ -f "$tmpfile" ]; then
-        # Removes temporary file on script exit
-        rm -f "$tmpfile"
-    fi
+    # Removes temporary file on script exit
+    rm -f "$tmpfile" 2>/dev/null || true
 }
 
 trap _rmtemp EXIT
